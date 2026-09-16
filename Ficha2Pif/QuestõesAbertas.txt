@@ -1,0 +1,99 @@
+Atividade de Lógica de Programação - Linguagem C
+
+Questão 1:
+a) Valor exibido no console:
+Após a execução do código, o número impresso na tela será 2.
+
+b) Explicação do fenômeno:
+Trata-se do processo de conversão implícita de tipos (coerção do tipo de dado) associado ao truncamento do valor. Por se tratar de uma variável declarada como int, o compilador simplesmente ignora a fração decimal (.97) da constante do tipo double, armazenando exclusivamente a parcela inteira (2).
+
+c) Controle explícito e prevenção:
+Para gerenciar esse comportamento de maneira explícita, pode-se adotar duas estratégias:
+
+Typecast explícito: Declarar a conversão de forma direta na instrução com o uso de (int) 2.97.
+
+Função de arredondamento: Quando for necessário arredondar o número em vez de truncá-lo, utiliza-se a função round() presente na biblioteca <math.h>, fazendo: valor_inteiro = (int) round(2.97); obtendo-se o resultado 3.
+
+Questão 2:
+a) Motivo para evitar <conio.h>:
+Trata-se de um cabeçalho não padronizado e exclusivo de sistemas legados da MS-DOS / Borland. Como não integra a especificação standard ANSI C / ISO C, a sua utilização compromete a portabilidade do programa, impedindo a compilação em plataformas modernas como Linux e macOS, bem como em servidores de implantação.
+
+b) Funções equivalentes e portáveis de <stdio.h>:
+Para operações de entrada e saída caractere a caractere no padrão C, utilizam-se as funções getchar() e putchar(). Já para leituras com formatação na entrada padrão, a alternativa adequada é a função scanf().
+
+Questão 4:
+Valores Iniciais: a = 1, b = 2, c = 3, d = 4
+
+a += b + c;
+Resultados parciais: a = 6, b = 2, c = 3, d = 4.
+
+b *= c = d + 2;
+Resultados parciais: a = 6, b = 12, c = 6, d = 4.
+
+d %= a + a + a;
+Resultados parciais: a = 6, b = 12, c = 6, d = 4.
+
+d -= c - b -= a;
+Resultados parciais: a = 6, b = 6, c = 6, d = 4.
+
+a + b += c += 7;
+Resultados Finais:
+a: 6
+b: 19
+c: 13
+d: 4
+
+Questão 5:
+Valores considerados: i = 1, j = 2, k = 3, n = 2, x = 3.3, y = 4.4
+
+a) i < j + 3
+Expressão: 1 < (2 + 3) -> 1 < 5
+Resultado: 1 (Verdadeiro)
+
+b) 2 * i - 7 <= j - 8
+Expressão: (2 * 1) - 7 <= 2 - 8 -> -5 <= -6
+Resultado: 0 (Falso)
+
+c) -x + y >= 2.0 * y
+Expressão: -3.3 + 4.4 >= 2.0 * 4.4 -> 1.1 >= 8.8
+Resultado: 0 (Falso)
+
+d) x == y
+Expressão: 3.3 == 4.4
+Resultado: 0 (Falso)
+
+e) !(n - j)
+Expressão: !(2 - 2) -> !(0)
+Resultado: 1 (Verdadeiro)
+
+f) !!n - j
+Expressão: !!(2) - 2 -> 1 - 2 -> -1
+Resultado: -1 (Na linguagem C, valores numéricos diferentes de zero são interpretados como Verdadeiro no contexto lógico)
+
+g) i && j && k
+Expressão: 1 && 2 && 3 (Todos os operandos possuem valor não-nulo)
+Resultado: 1 (Verdadeiro)
+
+h) i || j - 3 && k
+Expressão: 1 || ... (O primeiro operando é verdadeiro, acionando a avaliação de curto-circuito do operador ||)
+Resultado: 1 (Verdadeiro)
+
+i) i < j && 2 >= k
+Expressão: (1 < 2) && (2 >= 3) -> 1 && 0
+Resultado: 0 (Falso)
+
+j) i == 2 || j == 4 || k == 5
+Expressão: 1 == 2 || 2 == 4 || 3 == 5 -> 0 || 0 || 0
+Resultado: 0 (Falso)
+
+Questão 6:
+a) Diferença de fluxo e valores impressos:
+
+Incremento Pré-fixado (++n): Atualiza o valor da variável previamente à sua utilização no restante da instrução. Em "int x = ++n;", a variável n é alterada para 6 e esse novo valor é atribuído a x.
+Valores impressos no Trecho A: n = 6, x = 6
+
+Incremento Pós-fixado (m++): Emprega o valor corrente da variável na instrução e realiza a adição de uma unidade posteriormente. Em "int y = m++;", o valor original 5 é repassado a y e, em seguida, m passa a valer 6.
+Valores impressos no Trecho B: m = 6, y = 5
+
+b) Comportamento Indefinido no printf:
+A expressão "printf("%d\t%d\t%d\n", n, n + 1, n++);" acarreta Comportamento Indefinido (Undefined Behavior). O padrão C não estabelece uma ordem fixa para a avaliação das expressões passadas como parâmetro. Modificar a variável (n++) enquanto seus valores também são lidos (n, n + 1) dentro da mesma chamada de função, sem um ponto de sequência (sequence point) claro, torna a execução dependente das otimizações do compilador, resultando em saídas não confiáveis e imprevisíveis.
